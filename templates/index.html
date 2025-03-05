@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        ul { list-style-type: none; padding: 0; }
+        li { padding: 10px; border-bottom: 1px solid #ddd; }
+        .done { text-decoration: line-through; color: gray; }
+    </style>
+</head>
+<body>
+    <h1>To-Do List</h1>
+    <form action="/add" method="post">
+        <input type="text" name="task" required>
+        <button type="submit">Add Task</button>
+    </form>
+    <ul>
+        {% for task in tasks %}
+            <li class="{% if task.done %}done{% endif %}">
+                {{ task.task }}
+                <a href="{{ url_for('mark_done', task_index=loop.index0) }}">✔</a>
+                <a href="{{ url_for('delete_task', task_index=loop.index0) }}">❌</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
